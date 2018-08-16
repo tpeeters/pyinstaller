@@ -19,14 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 def qt5_qml_dir():
-    site_packages_path = site.getsitepackages()[0] # Works in Miniconda3 environment
-    # Note: Doesn't work on Windows. There we need [1].
-
     qmldir = ''
     for packages_path in site.getsitepackages():
-        print("path = {}".format(packages_path))
         qml_path = os.path.join(packages_path, 'PySide2/Qt/qml')
-        print('qml_path = {}'.format(qml_path))
         if os.path.exists(qml_path):
             qmldir = qml_path
             break
@@ -46,7 +41,6 @@ def qt5_qml_dir():
 
     # 'qmake -query' uses / as the path separator, even on Windows
     qmldir = os.path.normpath(qmldir)
-    print('qmldir = {}'.format(qmldir))
     return qmldir
 
 
