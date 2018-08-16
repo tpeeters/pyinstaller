@@ -107,7 +107,7 @@ hiddenimports = ['PySide2.QtCore',
 # TODO: we should parse the Qml files to see what we need to import.
 dirs = ['Qt',
         # 'QtAudioEngine',
-        # 'QtGraphicalEffects',
+        'QtGraphicalEffects',
         # 'QtMultiMedia',
         'QtQml',
         'QtQuick',
