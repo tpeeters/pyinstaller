@@ -8,8 +8,10 @@
 #-----------------------------------------------------------------------------
 
 import os
+import site
 
 from PyInstaller.utils import misc
+# TODO TIM: remove exec_command here and from hooks
 from PyInstaller.utils.hooks import get_qmake_path, exec_command
 from PyInstaller import log as logging
 
