@@ -8,8 +8,10 @@
 #-----------------------------------------------------------------------------
 
 import os
+import site
 
 from PyInstaller.utils import misc
+# TODO TIM: remove exec_command here and from hooks
 from PyInstaller.utils.hooks import get_qmake_path, exec_command
 from PyInstaller import log as logging
 
@@ -17,21 +19,34 @@ logger = logging.getLogger(__name__)
 
 
 def qt5_qml_dir():
-    qmake = get_qmake_path('5')
-    if qmake is None:
-        qmldir = ''
-        logger.warning('Could not find qmake version 5.x, make sure PATH is '
-                       'set correctly or try setting QT5DIR.')
-    else:
-        qmldir = exec_command(qmake, "-query", "QT_INSTALL_QML").strip()
-    if qmldir:
-        logger.error('Cannot find QT_INSTALL_QML directory, "qmake -query '
-                     'QT_INSTALL_QML" returned nothing')
-    elif not os.path.exists(qmldir):
-        logger.error("Directory QT_INSTALL_QML: %s doesn't exist", qmldir)
+    site_packages_path = site.getsitepackages()[0] # Works in Miniconda3 environment
+    # Note: Doesn't work on Windows. There we need [1].
+
+    qmldir = ''
+    for packages_path in site.getsitepackages():
+        print("path = {}".format(packages_path))
+        qml_path = os.path.join(packages_path, 'PySide2/Qt/qml')
+        print('qml_path = {}'.format(qml_path))
+        if os.path.exists(qml_path):
+            qmldir = qml_path
+            break
+
+    # qmake = get_qmake_path('5')
+    # if qmake is None:
+    #     qmldir = ''
+    #     logger.warning('Could not find qmake version 5.x, make sure PATH is '
+    #                    'set correctly or try setting QT5DIR.')
+    # else:
+    #     qmldir = exec_command(qmake, "-query", "QT_INSTALL_QML").strip()
+    # if qmldir:
+    #     logger.error('Cannot find QT_INSTALL_QML directory, "qmake -query '
+    #                  'QT_INSTALL_QML" returned nothing')
+    # elif not os.path.exists(qmldir):
+    #     logger.error("Directory QT_INSTALL_QML: %s doesn't exist", qmldir)
 
     # 'qmake -query' uses / as the path separator, even on Windows
     qmldir = os.path.normpath(qmldir)
+    print('qmldir = {}'.format(qmldir))
     return qmldir
 
 
