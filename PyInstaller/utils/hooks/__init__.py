@@ -14,8 +14,8 @@ import pkgutil
 import sys
 import textwrap
 
-from ...compat import base_prefix, exec_command_stdout, exec_python, \
-    is_darwin, is_py2, is_py3, is_venv, string_types, open_file, \
+from ...compat import base_prefix, exec_command, exec_command_stdout, \
+    exec_python, is_darwin, is_py2, is_py3, is_venv, string_types, open_file, \
     EXTENSION_SUFFIXES, ALL_SUFFIXES
 from ... import HOMEPATH
 from ... import log as logging
