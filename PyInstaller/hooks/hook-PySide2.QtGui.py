@@ -23,3 +23,4 @@ binaries.extend(qt_plugins_binaries('styles', namespace='PySide2'))
 
 if is_linux:
     binaries.extend(qt_plugins_binaries('platformthemes', namespace='PySide2'))
+    binaries.extend(qt_plugins_binaries('xcbglintegrations', namespace='PySide2'))
