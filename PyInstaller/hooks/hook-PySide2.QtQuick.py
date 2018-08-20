@@ -9,6 +9,7 @@
 
 import os
 import site
+import sys
 
 from PyInstaller.utils import misc
 # TODO TIM: remove exec_command here and from hooks
@@ -20,8 +21,11 @@ logger = logging.getLogger(__name__)
 
 def qt5_qml_dir():
     qmldir = ''
+    # The path to the Qml directory is different in Windows
+    qtpath = 'PySide2/qml' if 'win' in sys.platform else 'PySide2/Qt/qml'
+
     for packages_path in site.getsitepackages():
-        qml_path = os.path.join(packages_path, 'PySide2/Qt/qml')
+        qml_path = os.path.join(packages_path, qtpath)
         if os.path.exists(qml_path):
             qmldir = qml_path
             break
